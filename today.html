@@ -1,0 +1,446 @@
+<script>
+const today = new Date();
+//const today = new Date("2024-11-30T00:00:00");
+const day = today.getDate();        // Day of the month (1-31)
+const month = today.getMonth() + 1; // Months are zero-indexed (0-11), so add 1
+const iday = day - 1;
+const iUrl = "upnote://x-callback-url/openNote?noteId=";
+let iId = "tester";
+const iJan = [
+  "04877052-546d-488e-896b-f5de99f1f2e6",
+  "55122eff-2a70-468e-9d91-ab51e81d35e6",
+  "a79bbf48-7f6e-491e-acc7-a5c5da1b6352",
+  "98e0acd1-1be6-40f2-8b8e-d93c01c130b6",
+  "f697462c-3738-4194-8cca-70e3b64afbca",
+  "494cc710-634d-4e9d-86b2-00a6d9afc5ad",
+  "7f03ec15-4ce1-4cdb-a417-5944b8b76bd0",
+  "c1e2b09d-62e6-400b-a4be-8709022fc106",
+  "15c2558a-4fc0-470a-9ec3-7745abf40ceb",
+  "55d6c2a4-0a3b-4ad4-97f4-35ca18dc9810",
+  "fd9dea93-eff2-4b28-83a6-2d1279778da1",
+  "9ad4fd9c-4ea9-4dee-9cd2-048278e5d357",
+  "a7d3e115-7860-40e6-b009-eae51a1fbfc5",
+  "6df04621-a20e-489a-9f9b-de418dc3937b",
+  "a495a133-085b-433b-a452-f26f7e577691",
+  "d5b61c68-d7bf-4eac-8f98-4b761f0d4bd5",
+  "1d208ad3-270e-498c-9a84-13c0e413b926",
+  "d0aa3977-e266-4505-b226-6a66542ed9e6",
+  "907242d1-d765-4318-b51c-e22976ddcdd8",
+  "eed43c72-256d-4529-899e-8825f66cb5bf",
+  "444b9811-d2a7-4c12-b022-d48e5b9452e5",
+  "a58b2a98-6867-4193-9cf0-6980087331cb",
+  "1c0d13ce-61c2-49f1-ad84-ec395e71431e",
+  "933b1c6d-db27-4544-a2fd-8f2f965115eb",
+  "4fd32781-0e96-4c7e-89f7-6fd25eef2bbe",
+  "e1f4b24c-6c70-487c-8597-c1217ba7cfad",
+  "8c54dee6-7439-43aa-838a-4d4ebf6e60c5",
+  "1c258962-fdd2-49f4-ad70-9c2babec5592",
+  "fe7fd6b9-bd38-4e46-b0b3-a67054314141",
+  "77bab108-7e47-436a-a413-2363e4076aff",
+  "d957c5e1-e32c-49f2-8321-91d8a312335c"
+];
+const iFeb = [
+  "7ae6f516-8d6c-4af4-ad1c-487ea950d1d7",
+  "c1bb5afa-c6a4-48a9-bfb9-2c2e75f3360d",
+  "43e0a3e8-008d-4618-8100-119e26bf2090",
+  "5e601011-bdb3-4b27-a9e3-0873fa49befd",
+  "ecd3280a-57df-4723-8bdd-c3ca88adf784",
+  "e49b3aa3-d66a-4b44-8dd5-20c411650973",
+  "b12873cc-7511-446f-b8f1-1886880ee47f",
+  "b10296d7-c78f-425f-ad99-b6acfbaeaad8",
+  "90c84069-3142-4b84-af1b-09f2b42168e1",
+  "533e6557-eb5f-4224-b110-b401aac4d445",
+  "c2276282-f3d5-416c-9b9e-1918e252887f",
+  "13fe6402-0131-4e67-94f6-68923b9445eb",
+  "89d4ead1-219d-4ccb-94d4-4626032344d9",
+  "25aa8b45-8fac-4953-8175-ea0d95a73101",
+  "383264b0-df49-4623-97cc-2a35029e11cb",
+  "dfaf1f6b-bc38-4339-95be-69729e94e39b",
+  "71cfd568-f593-4668-aa9d-53ae1c4ddd19",
+  "d54d0913-e690-4388-b8b2-16fdffdeaef8",
+  "7b8efb2d-5c79-47db-b205-92427370b1de",
+  "ca1de645-2742-4c8d-8a4c-b6420541edb2",
+  "e2692321-94f7-4fcf-93e0-cf34d4671c47",
+  "c0b1729d-bf1e-481b-ac60-fd3842bf32f7",
+  "23b9efb8-cd11-475b-a342-82d60f6e82db",
+  "f58bed5b-6e0a-40e5-8772-4d61fcb98dd4",
+  "1994d35d-2e76-40bb-b740-5a8c600bab5e",
+  "11ee3cf8-83b8-41c3-ab3d-45d558ddf2e7",
+  "cf31a493-8774-48d1-b216-ecd9c116c798",
+  "e06cc652-84bb-433f-9b71-b3fd096fbee8",
+  "25d72f21-e402-4126-8190-a2aa50897dd7"
+];
+const iMar =  [
+  "ff124f54-bc7c-4499-bf1e-e1d13472772b",
+  "0d6ced35-351b-43f8-80e1-ef9bb2754eb3",
+  "c66de9ef-0c7c-4217-b37e-7eae25d439a8",
+  "bcf15601-f588-401b-a19c-497d335b2cd5",
+  "d821b0db-a876-470e-abf0-6519e3d77d6d",
+  "ede16c75-75e8-442d-ad18-68944dfeac7f",
+  "3d76eaee-1671-4a87-b48b-284f81ccc951",
+  "a15d2f3a-0c8c-4be2-b938-300ce917b065",
+  "ef049a99-015f-4c0f-bf92-41c02814434e",
+  "8c44e9c7-ee19-405a-8c3e-76441fc77289",
+  "6f9f6e6b-5da1-45d1-8f82-7552e130dea1",
+  "83a3a6ad-a8f5-4b81-bad9-6a9ed53837d5",
+  "6c77c6a5-030b-4526-be07-bb20eae1a801",
+  "8f47b867-dec6-49d5-ab1c-023cc59b60d9",
+  "6a3b1832-d949-4bfa-8bdb-878366567708",
+  "3f62813d-a676-418a-ba9e-87bfc4229f70",
+  "42209262-b6e0-4ea0-937b-55e0392eb613",
+  "349e282e-4efa-48ed-ad09-abf6f32465b2",
+  "f7607894-1cdb-4840-82cd-162f94be323d",
+  "d628833c-7857-425b-83e7-05eb1353a214",
+  "c6aae370-d4d5-4fac-b715-f87053c813ea",
+  "f7a1407f-c7cb-47f4-8254-282c3e4e4176",
+  "752bc27f-e8cb-457a-9f9a-d2e67f3057b8",
+  "775773c0-6593-420a-a31d-730802a39a90",
+  "9d52e697-a418-4513-bc22-638b49a728c5",
+  "c1b8a328-8019-4fdf-b797-7a9548ce81bf",
+  "b7a80aaf-cd65-4966-b23c-6f97a383f388",
+  "0b9c6c7a-e1a5-404c-ab2c-fa1544895844",
+  "2a3bc79f-d7d3-4061-98f9-fcd2ff7a5bff",
+  "9bd14c6b-e3ad-4d4d-98ba-2f315b8c6690",
+  "796d8939-0d36-41a9-aa45-90dcbf9b715c"
+];
+const iApr =  [
+  "fc52e38f-b203-4ef6-a807-3c91d13902c3",
+  "9c9120ea-7034-40ad-a40a-671cdc1bf3fa",
+  "aba155d3-e556-4609-be29-81fcff9c408d",
+  "bd2f9723-b4d7-449f-bca4-417014f72376",
+  "9d9973c4-7fd8-440b-b05b-ac3335d17a69",
+  "e93fb15c-86ef-4f39-be60-1230d17d62eb",
+  "f20d4c02-d754-4c81-82a8-0869bd9e81fc",
+  "c00e0b16-21c2-4426-ac17-c4e1afd97fd4",
+  "40036da0-401d-4e3f-8641-103cc5ce2f77",
+  "9a35ac31-d856-48b2-95c8-4d8031218454",
+  "2437ae05-da20-4389-b9c0-725ea7ca9999",
+  "6bb83aef-0c2b-4665-838b-206cbe23e2d9",
+  "79de7450-e871-4d17-ba49-a15bff0eec34",
+  "3ee3da3a-453a-4a8f-8e16-1de2cfb86982",
+  "034ab977-bc0a-43b5-8e8f-958c99514fed",
+  "6a3e8f8c-2201-46cf-941f-9472c34c1cec",
+  "d80288ab-54e2-447d-9786-c1de92e3062b",
+  "8223b160-e3b7-4a6f-87a4-c872cd4471cf",
+  "dae7b74f-a1f6-4727-9bd0-e7d2ccf3f6f0",
+  "470ebd94-ed84-490d-af57-8894d34ecc5b",
+  "b91b8645-a52c-469f-9803-7ad0c039d59a",
+  "1eff22a0-c780-4c38-a73f-7a9259f79cb3",
+  "513e224f-bd8b-4f08-9f89-69590f23051d",
+  "ad00c318-69c4-44f7-b595-36132fb631c8",
+  "d80433d5-249e-4ffe-a2c7-0a275c82fe13",
+  "f5a5d33f-dfff-48b3-bf47-bd29c676fcb5",
+  "a4122f97-1eee-4e37-be58-f3574776989a",
+  "dd4131e0-c22d-4405-b62c-bb2b4b4cb63e",
+  "e5e2bf57-34ad-4b1a-bda5-390764c3a390",
+  "c68f6682-6d9f-4c31-887e-8709ffc55506",
+  
+];
+const iMay =  [
+  "51d157c9-c798-447a-84e2-18014256e528",
+  "6551956e-027d-48dd-9dcc-a10b0026e717",
+  "95e16b21-3871-498a-98c3-d35b0ed29e20",
+  "fe810c11-f516-4cd6-aed0-ee0a7bb6b4b1",
+  "c454b1da-796a-41de-b0f6-43c1415bcd20",
+  "c165570c-48c5-4124-9c01-d2643ca67f60",
+  "d7997a60-eae9-4677-8817-271906011ad0",
+  "e331eb1a-de7e-423b-9677-23e383408b79",
+  "1d4feb71-9385-4a12-9358-e682a3271d93",
+  "1e0e1e02-96a6-4a56-b65a-03187a626eaa",
+  "ecba22ba-1de4-4d40-93b7-461c7b8d84cf",
+  "980d55f3-7e62-4590-87d3-49150e0f3880",
+  "ee7fc7dc-2321-4ef2-ba6b-5154c5c6186b",
+  "d4136201-2146-431e-84d8-633be7bb49fa",
+  "746964e6-2776-4a4b-ab52-9e592c4b9f73",
+  "5b0a52e2-6b81-49f5-b2a6-2a54c8e2889b",
+  "22659f0f-0ff5-403d-9516-065cc4427a53",
+  "de01be3d-6ec1-47f1-94ab-d1d8045b1433",
+  "1d20597f-cfb0-4284-b908-b1f32b6e57df",
+  "2c73c023-5238-4e97-a2e1-fecd06d9764c",
+  "f7d41421-1141-4aa4-aba6-3cec0f5ccfd6",
+  "997b18be-a27d-4a59-9302-96a94d3a3f43",
+  "051e08bc-5d68-46d5-ab4c-a72e9816aec8",
+  "82964254-5a3d-4ca3-ba22-1de8f795170a",
+  "73ca7445-453c-4882-8797-650cbcd49f45",
+  "2f9a0aec-5bf8-44c1-acf9-f1a292918508",
+  "1382523e-54e3-45fb-af57-6f19fb9adbf8",
+  "d1466a07-c9de-4499-8bc9-7e4110796a81",
+  "753b6033-49f9-4a17-a3af-b282f33365f8",
+  "3952da3e-4b39-4d1c-9aa4-5cf1c82a4f66",
+  "909d81ed-2578-4108-8c8d-3479ba6ef7b8"
+];
+const iJun =  [
+  "618361b4-908f-47fa-997e-990f2ac3dc66",
+  "a208fc7b-f81f-49df-abdc-7c8b24b1a871",
+  "16f6d5f3-b58d-4f65-b5c9-3fc881197990",
+  "7f55e509-9ba5-4044-8a3c-9626803d1dd7",
+  "c3d812cd-ff0b-4049-9045-e40e7ef2aaae",
+  "8892e4d9-f03d-4342-bf49-4fba50cd27a3",
+  "e4095250-cb02-4dda-aa91-4dfd63d8fdd4",
+  "a101e323-49e6-4553-8df0-16e1b3158d33",
+  "dee09d60-8b27-4ae6-ba0e-cf2f9cd38e26",
+  "de2ad3c9-2af8-41ea-8391-79f7c17ac700",
+  "2be4ec0b-26e7-40a4-8b2d-16cc373e22a1",
+  "3272630d-a11e-4f10-8aa5-efe9a3750eea",
+  "97c8b28b-fe33-4ea4-9e64-05ab48e32ccb",
+  "7be8b616-ee2c-4d3b-9256-a5a9dffc93c4",
+  "75f60560-759d-477c-9846-6d1d037599cd",
+  "d9935c04-f87b-44ee-86ad-cfaf5beaa4a5",
+  "390db337-f3d2-4ecb-bf60-8237f5aaa8f7",
+  "81723d4a-62ce-4a89-89fd-68cd2ba50fa8",
+  "cee15451-da8f-4e1b-9408-8c3b307976b2",
+  "d2240ef0-9d79-494b-94ef-87b189e8585b",
+  "1e3dbb5b-f4a0-4aa9-8ec3-5e97167192ae",
+  "62fa9d5c-f4d5-42d4-b63f-b9a5fc57ec64",
+  "64bc02be-d131-4cd2-8cd2-b3f7218722c2",
+  "43cfd66f-ea66-4ad1-9d72-07049b2b9baf",
+  "6c950fe0-5e7a-44eb-a7e4-d4c7a798b6df",
+  "bcb2ee07-cc5d-4e60-ae2d-61fab71acba3",
+  "ecb5a94d-143e-49d3-adc4-e20b229dabe1",
+  "dcb81cc4-ea04-46fb-ae77-282c7217cbc2",
+  "6233aea9-b514-4a04-818b-b0afad1bdd09",
+  "265f02a9-376a-4f52-b5ab-bf0b1979c39a"
+];
+const iJul =  [
+  "022d2586-f645-41e2-9148-873c37aae389",
+  "52f0f348-2105-4ff9-b276-ce6c2bcff191",
+  "6b6d52f5-f7d9-4b11-b29a-532baffea7e7",
+  "4ed984e7-0177-4da0-853f-e866b2cb2be2",
+  "0acdcc4e-0ed1-4085-acef-16304d5270d8",
+  "2a60d186-cf01-4c2f-8d49-1b0b13f4130b",
+  "0be6db7d-df27-4adc-b5e4-cc0613af99fe",
+  "cc0364fc-6195-41c4-901d-8f60ea1024f1",
+  "98a84767-4287-45ed-84c5-94d1fe7120c0",
+  "2eded4eb-9a4b-42a3-9797-52a5189efde0",
+  "35b5ee8c-78f6-4b89-bbdc-b43d42aff71b",
+  "118658b5-f4b0-4cfb-93c2-87a429e011f6",
+  "05bfb337-8018-404e-ad1e-b265a8b9bdd1",
+  "9a00c7e9-409b-4f38-9a5d-1b70db69a7f6",
+  "c1750cb2-1b3d-4a12-b7b2-05b9238d45b2",
+  "d4f3a193-4b8e-4cc0-8b74-a1d48a4064aa",
+  "62a70b1e-ef0b-4726-97f9-bf9799b052d6",
+  "3e17e934-dddc-4fb9-beca-20274cb9535a",
+  "4d401c3d-9947-4f31-8838-da322c4920f3",
+  "f485d261-db93-42e2-8104-41e3c9149681",
+  "cd810d2e-9c9b-4abe-9f7b-a76a027ea9c1",
+  "f306e934-bed7-4c8a-aa6a-9159166e612d",
+  "b2cf5120-05ba-4164-8429-c4fe932138d8",
+  "420640cf-a971-410b-b0e4-1698b4256c91",
+  "66c3f0bb-488f-4eaa-bca8-6a512d20b94c",
+  "41e1ef45-355a-4173-9dd0-459840af4fdb",
+  "6ce87085-f643-4d66-8c0f-7f076a4810ab",
+  "f2b0ae62-8185-467e-a1fa-40ae20df654c",
+  "8decd5a6-69f9-405d-9efe-ee254bfcaf33",
+  "1601108e-13ef-4c61-b20c-7826ad179a8a",
+  "e237ddd9-0694-45fd-8564-03fdc8a139c5"
+];
+const iAug =  [
+  "388466b6-53ae-491f-8f0b-45723cadf100",
+  "cf6389aa-e23d-446a-8ad9-b6afe28c0696",
+  "45792d1d-6183-4e78-bc91-ce9fe360494a",
+  "e576e25c-732d-48ea-a5ac-9be76323a666",
+  "27e6d2bf-4908-468c-8082-d4fe427ec1db",
+  "fb05fd03-75c1-42d3-97f3-eaf2721ef1f2",
+  "822f64da-ea0c-414c-bc90-252047e570d4",
+  "62a61285-a031-4db4-ae28-00e9d7b69f5c",
+  "500decf8-5710-4d57-9b77-9ac0204dc6e9",
+  "e3749714-b43b-4336-bd9b-562148f34435",
+  "0c7ae538-0843-43ab-bc09-78601285f004",
+  "26b786a3-3e2d-410b-99c9-336261fa9bfc",
+  "f856a2a4-2012-4c5f-9514-75ca93b40a26",
+  "14fbddee-b005-4e1a-b5f4-baf448654e8e",
+  "fdbc35a7-707b-4a6b-b67e-8e96faa0b1d0",
+  "ec4bddd4-d4e0-4812-add6-2e060ea28dc5",
+  "375dfad0-80c9-421d-9cc8-3debfc3ce3ae",
+  "a872aa78-29aa-4650-b411-98634ed0d4b0",
+  "16d67b02-21df-4d74-a58b-c1dcd9ec6212",
+  "2ae53b98-1626-40ac-9b7b-0f8dafe8180f",
+  "79112973-a427-4042-9765-87c44e4a3c53",
+  "ad91f6da-0e33-4f79-91a2-504b243f2d2e",
+  "28f57871-8036-4322-b3ad-b604778145f6",
+  "737fdebc-4a8d-40f6-8464-9d1eb4b55251",
+  "a65c4284-4f1a-4dec-b3c9-a76cdbb3337b",
+  "e7d631c7-15d5-4a36-a0e6-3475a8c594da",
+  "5666acf8-9330-4bf7-8675-ce0b29d24c4c",
+  "cb32db17-b0da-421d-9ecf-23ba6228dc2b",
+  "2e96583f-8062-4481-b786-ab3444fa41bb",
+  "89fccff7-f810-472e-856e-dc62aeb4755c",
+  "0972a634-70c6-498d-a242-7502629ecdfe"
+];
+const iSep =  [
+  "73760a74-2ada-45af-89ca-71972e2bd30b",
+  "7f153a80-13bc-45d0-ae3e-1d3f055dffac",
+  "25b0ad08-bdd2-4695-a056-b0ae9cd32865",
+  "3c5d34e2-1b93-49d1-ab2c-720e43933c72",
+  "4b20d27e-bc01-4d2a-93d2-d8a065a29bbc",
+  "be379223-bb36-4444-bb5a-f09ff7816ca8",
+  "b4d2d455-4b96-4f6c-b551-ae1585872086",
+  "eccb91e6-c073-484f-9c67-00bc10df2d47",
+  "dd7ee314-73e6-42cc-8eba-a56ee9627673",
+  "d520504c-d0c4-4c96-ad34-934d42735a03",
+  "3be2e210-6c78-45e5-8ce2-7761ce3064c6",
+  "c3d4a0d8-edcc-4087-aeb2-9ccb28797ca2",
+  "59253e78-1e9b-403c-8bbe-7f7142484b0b",
+  "9e4ec92a-a4bf-42ad-91b6-56b0b9be3322",
+  "93b9b958-9777-422f-a7a3-91bb8dff3abc",
+  "0f2ed7f7-98ad-4049-8b33-2bbf2c903945",
+  "2123311f-27c2-4717-9668-04ccb2040a62",
+  "27e2afab-bda1-49d8-803c-0e1111c602dd",
+  "96708183-7d17-44ba-a61e-b165f3cacd46",
+  "9dcf9ecc-8f83-455b-8248-019759d7c76a",
+  "05af6697-bf27-45f0-9351-3145051d9642",
+  "f931516c-df46-4a36-b771-419d039f047a",
+  "e8516687-a944-4273-baf4-0c80ea3bb645",
+  "e86beba6-7065-4933-9213-d91176e0cec4",
+  "629c4969-579f-403e-b335-b64544d9fe94",
+  "93609574-1f8c-45b9-84bb-bbcb7e97f126",
+  "4192fae1-c746-43ba-af27-d597e6965eec",
+  "3491dbfa-8e8f-4f64-8e90-e7c2f5a10729",
+  "8a3b5bc4-800e-4681-b344-69d2196d2158",
+  "22aa8f62-f0c2-4fcf-a6ec-a2c85812c13f"
+];
+const iOct =  [
+  "0c26d4be-c413-4b47-8484-2ccce6666c03",
+  "a03ea075-41dc-4909-af1d-436dc4299266",
+  "a7a92f5f-a97b-40a1-918b-39d467ec1b85",
+  "5ff51066-0807-4170-b178-fba7a29e3217",
+  "c9c3676c-44ac-416b-97b5-0cb838f98d8e",
+  "d8f6399c-163f-45bf-97a1-cc418138ee26",
+  "fac0aab1-b19f-4390-878d-2836269437de",
+  "ecec5c1a-b916-4eff-a2bf-5cc2bed04d7e",
+  "e60311a3-b89a-4ff5-a23f-6e56236b639d",
+  "a9daf28b-1327-48a8-b0b4-352ba9e198dd",
+  "3f29aebd-71ea-472d-abcd-1f804715b6a1",
+  "5896f562-5b43-4d15-8f3a-3175cab5a705",
+  "dff4f0e3-53af-4a03-a02b-21c03aeefa1d",
+  "4eb22d44-e549-4ec1-9abd-e5fe0e90bbd8",
+  "f58b5165-9339-4b87-9b75-ab205bfd3820",
+  "72848475-7144-4280-a41f-e37e63c4a98e",
+  "8b7c625b-4424-4109-a87c-70df7fc30932",
+  "3bbe0802-f79d-46ba-90d9-282ddca79adf",
+  "af539776-8e87-466d-8fe6-925f343f231a",
+  "c6711d97-1d5a-4878-9e91-9d6019192232",
+  "93c736cf-0125-49fb-a6e8-12c439b156b3",
+  "99b2836c-ff5a-410e-ab5e-f435dc06faa9",
+  "646673ec-2bb4-4c3b-8e16-a16558e7db1e",
+  "6ea4e1cb-bd12-43b9-affc-1cbd9b91fee3",
+  "7b6aa257-03cd-4fb9-9b1e-4f4ccc073966",
+  "fd2c2f37-fb7f-42c2-954d-579c019f2d78",
+  "08337182-fcb4-4731-8b56-53fa9693ebec",
+  "842fdff3-13c6-40f1-9992-3e9ff519771a",
+  "7a5c6b04-62cb-4a61-913c-f2aa9e1bd079",
+  "58d4a67d-6b94-42f9-a4c2-19aa0c1bc47c",
+  "ec6c3e47-e3d7-42e8-8b24-8eae7d1294c0"
+];
+const iNov =  [
+  "554fa000-5246-4940-adfb-484fa8cd238b",
+  "540a4d77-518c-48ff-960b-f985ebe7d439",
+  "135a8dc1-0ee2-4f0f-b48d-4b66860f25cb",
+  "f1d507c6-20a6-41c5-b11a-4798f5e5623d",
+  "2f2ed898-c189-4033-9c82-d3e76876edc0",
+  "df10ae1e-3a30-4713-980a-372ef166771f",
+  "fb98a052-819e-4b88-9c64-61b5db2e44dc",
+  "0b10b35c-f013-4c45-95c5-a38a5c3ee75f",
+  "59a1abf1-9f15-472d-abe1-7fdca7977da1",
+  "c56aff46-35cd-49e5-b8af-c77d168b4df7",
+  "75226e32-7188-4aef-9daa-c29e752bc208",
+  "c6690bf1-0c9d-443d-83ee-4555b1f72d96",
+  "4f391a8d-fc74-4d03-97b0-c7021faa3e66",
+  "890dd6d4-5c0d-4029-a0cf-a12b6ab92c12",
+  "ea1d513a-6310-402b-a0d0-7c19e8e84900",
+  "591b9b80-7150-426f-887e-078a5ab35016",
+  "6551f738-d9eb-4527-b122-0b171bb7bd9f",
+  "92c4489c-fab5-421a-a1c6-f198cfaa20fe",
+  "491513dd-ecaf-4eda-b69c-51ae4e887945",
+  "bef1531e-796b-4b70-a924-faf01a381b3c",
+  "baf31982-3714-45e9-90c8-bc9a574f00c1",
+  "e6bb0dfe-e0d8-43dc-ad2f-2f395514db4d",
+  "c5db9241-b00f-4c08-867f-c24427d9e93e",
+  "ba749ce0-26f2-409d-9005-dd3e33baeb13",
+  "b2b6a19c-8b67-4860-a8ea-6d23dc0dd0e9",
+  "fd47fb9a-bab3-4611-9cba-43755ec67f0d",
+  "b8aa5df0-3a49-4a50-a152-b1a689d511b4",
+  "a9c8e12d-71c4-4d3a-bebe-f0132eb19eeb",
+  "d184d780-589a-469a-add3-5fe6669c9ab9",
+  "113099b1-b899-4dbb-b175-c11f846847d9"
+];
+const iDec = [
+  "ec0b9b24-64bb-407d-ab80-d304de08f081",
+  "8aed3485-4f8f-4245-a62e-0127c8fbd017",
+  "ac09fc35-c5a3-4406-b485-fc7b4609343c",
+  "fb00167f-a71a-4ab2-a2d5-d4780d2ab565",
+  "945ea513-30b4-4eab-b9f0-a65e2cd0f45f",
+  "202addff-e3ea-460e-9be2-8c30663686bf",
+  "4411b180-8028-427a-8f9a-fe5e3098c9d3",
+  "274e624a-eb5e-459d-9b33-32237e41ff9e",
+  "62b1091b-1971-46c3-991d-ba55709c6e7d",
+  "db429ae3-3ddc-4b87-8729-9008960875cd",
+  "4039f666-3fee-45a9-88c0-3d585c0e77a8",
+  "ee6db9a0-3ed4-47e4-8612-0eb2efa47920",
+  "7435a463-7221-458e-84fd-6c61674ccabf",
+  "a83c9b76-4fa0-4642-92d6-f978c70008d7",
+  "8bcacef6-b057-4eb0-bc92-6780e57f469b",
+  "a0aa136c-883f-4813-be47-51f1cbd300a8",
+  "94419653-5066-4621-bcf4-89ef25c91ce3",
+  "09e05619-3f4e-4f40-a7ae-7eff2aa6ad6e",
+  "fb951192-4e49-4601-b718-e51df0a59025",
+  "b555f4e9-88fd-4e72-9894-9b18af3949c6",
+  "c08dd389-f6a2-463c-b007-01c86553d335",
+  "04327ba8-3839-49ed-8398-a7df79829221",
+  "226e3264-e90e-4d7f-8696-cafacdc8f87f",
+  "432eb9ac-6c10-468c-9203-918ca75ec735",
+  "4930731b-0a21-46c8-b8c7-906463573055",
+  "5f73899c-516e-47af-9d70-5d2dc3009b40",
+  "9c871554-df8a-4739-b78c-1c63c276b343",
+  "82159abb-3f4e-4222-94be-e3bbe2bef186",
+  "3d103d37-34e1-4524-a4a1-7f9825d68063",
+  "60d123b3-e765-4ffb-b413-1726394874e9",
+  "95151dcc-328c-4c18-81d9-230cc1ffcd3e"
+];
+
+if (month == 1){
+  iId = iJan[iday];
+  //console.log (iJan[iday]);
+} else if (month == 2){
+  iId = iFeb[iday];
+  //console.log (iFeb[iday]);
+} else if (month == 3){
+  iId = iMar[iday];
+  //console.log (iMar[iday]);
+} else if (month == 4){
+  iId = iApr[iday];
+  //console.log (iApr[iday]);
+} else if (month == 5){
+  iId = iMay[iday];
+  //console.log (iMay[iday]);
+} else if (month == 6){
+  iId = iJun[iday];
+  //console.log (iJun[iday]);
+} else if (month == 7){
+  iId = iJul[iday];
+  //console.log (iJul[iday]);
+} else if (month == 8){
+  iId = iAug[iday];
+  //console.log (iAug[iday]);
+} else if (month == 9){
+  iId = iSep[iday];
+  //console.log (iSep[iday]);
+} else if (month == 10){
+  iId = iOct[iday];
+  //console.log (iOct[iday]);
+} else if (month == 11){
+  iId = iNov[iday];
+  //console.log (iNov[iday]);
+} else if (month == 12){
+  iId = iDec[iday];
+  //console.log (iDec[iday]);
+} else {
+  iId = "error";
+}
+
+console.log(`Today is: ${month}/${day}`);
+console.log(iId)
+console.log(iUrl + iId)
+window.open(iUrl + iId);
+
+</script>
